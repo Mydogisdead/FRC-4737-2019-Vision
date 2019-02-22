@@ -23,10 +23,7 @@ import edu.wpi.cscore.UsbCamera;
 import edu.wpi.cscore.VideoSource;
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.networktables.NetworkTableInstance;
-import edu.wpi.first.vision.VisionPipeline;
 import edu.wpi.first.vision.VisionThread;
-
-import org.opencv.core.Mat;
 
 /*
    JSON format:
@@ -64,10 +61,35 @@ import org.opencv.core.Mat;
  */
 
 public final class Main {
+  /**
+	 *
+	 */
+	
+	private static final String PMD_CYCLOMATIC_COMPLEXITY = "PMD.CyclomaticComplexity";
+  /**
+   *
+   */
+
+  private static final String PMD_CYCLOMATIC_COMPLEXITY2 = PMD_CYCLOMATIC_COMPLEXITY;
+  /**
+   *
+   */
+
+  private static final String PMD_CYCLOMATIC_COMPLEXITY22 = PMD_CYCLOMATIC_COMPLEXITY2;
   private static String configFile = "/boot/frc.json";
 
-  @SuppressWarnings("MemberName")
+  @SuppressWarnings(CameraConfig.MEMBER_NAME2)
   public static class CameraConfig {
+    /**
+     *
+     */
+
+    static final String MEMBER_NAME = "MemberName";
+	/**
+	 *
+	 */
+	
+	static final String MEMBER_NAME2 = CameraConfig.MEMBER_NAME;
     public String name;
     public String path;
     public JsonObject config;
@@ -122,7 +144,7 @@ public final class Main {
   /**
    * Read configuration file.
    */
-  @SuppressWarnings("PMD.CyclomaticComplexity")
+  @SuppressWarnings(PMD_CYCLOMATIC_COMPLEXITY22)
   public static boolean readConfig() {
     // parse file
     JsonElement top;
@@ -197,17 +219,6 @@ public final class Main {
     return camera;
   }
 
-  /**
-   * Example pipeline.
-   */
-  public static class MyPipeline implements VisionPipeline {
-    public int val;
-
-    @Override
-    public void process(Mat mat) {
-      val += 1;
-    }
-  }
 
   /**
    * Main.
@@ -241,7 +252,7 @@ public final class Main {
     // start image processing on camera 0 if present
     if (cameras.size() >= 1) {
       VisionThread visionThread = new VisionThread(cameras.get(0),
-              new MyPipeline(), pipeline -> {
+              new TestImgCapture(), pipeline -> {
         // do something with pipeline results
       });
       /* something like this for GRIP:
@@ -251,7 +262,9 @@ public final class Main {
       });
        */
       visionThread.start();
+      
     }
+  
 
     // loop forever
     for (;;) {
